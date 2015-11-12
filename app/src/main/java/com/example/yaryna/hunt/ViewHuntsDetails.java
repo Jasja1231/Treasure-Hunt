@@ -14,6 +14,14 @@ import android.view.ViewGroup;
  */
 public class ViewHuntsDetails extends Fragment {
     View view;
+    /**Hunt we clicked on to view details (In case of guest)*/
+    HuntInstance hunt;
+    public String FRAGMENT_BUNDLE_KEY = "com.example.yaryna.hunt.viewhuntdetails.FRAGMENT_BUNDLE_KEY";
+
+    public void  setCurrentHunt(HuntInstance hunt){
+        this.hunt = hunt;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

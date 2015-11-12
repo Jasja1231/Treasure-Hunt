@@ -1,9 +1,11 @@
 package com.example.yaryna.hunt;
 
+import java.io.Serializable;
+
 /**
  * Created by Yaryna on 01/11/2015.
  */
-public class HuntInstance {
+public class HuntInstance implements Serializable {
     private String  name;
     private String  creator;
     private boolean my_hunt = false;

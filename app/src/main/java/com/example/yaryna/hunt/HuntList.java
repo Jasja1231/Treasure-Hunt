@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -56,13 +57,20 @@ public class HuntList extends Fragment implements Updatable {
         request.execute();
         huntsAdapter.notifyDataSetChanged();
 
+        /**Handle view details on item (hunt item) click */
         huntsList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /**Creating new fragment to view information about the event*/
+                ViewHuntsDetails viewHuntsDetails = new ViewHuntsDetails();
+                /**Set current hunt we are viewving*/
+                viewHuntsDetails.setCurrentHunt(hunts.get(position));
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container,new ViewHuntsDetails())
+                        .replace(R.id.container, viewHuntsDetails)
                         .commit();
+                String output =  Integer.toString(position) + " " + hunts.get(position).toString();
+                Toast.makeText(getContext(),output , Toast.LENGTH_LONG).show();
             }
         });
 
