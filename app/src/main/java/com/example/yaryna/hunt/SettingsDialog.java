@@ -6,18 +6,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Yaryna on 05/11/2015.
  */
 public class SettingsDialog extends DialogFragment {
 
-    String username;
-
+    String username = Username.getInstance().username;
+    View view;
+    EditText editText;
+    Button cancelButton, saveButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.dialog_settings, container, false);
+        view = inflater.inflate(R.layout.dialog_settings, container, false);
+
+        /**Edit text Field*/
+        editText = (EditText) view.findViewById(R.id.edit_username_text);
+        /**Set username edit text field default username(as text to show)*/
+        editText.setText(Username.getInstance().getUsername());
+
+        /**Cancel button*/
+        cancelButton =(Button) view.findViewById(R.id.dialog_button_close);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on cancel button  click
+                dismiss();
+            }
+        });
+
+        /**Save Button*/
+        saveButton = (Button)view.findViewById(R.id.dialog_save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String newUsername = editText.getText().toString();
+                // Perform action on save button click
+                if(Username.getInstance().IsValidUsername(newUsername)){
+                    Username.getInstance().changeUsername(newUsername);
+                    editText.setText(newUsername);
+                    dismiss();
+                }
+                else{
+                    Toast.makeText(getContext(),"Invalid username",Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+        });
 
         /*Widow without title bar on top ;) FINALLY STUPID TOOLBAR IS GONE,after hours of research*/
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
