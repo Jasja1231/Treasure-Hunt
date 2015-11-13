@@ -75,7 +75,11 @@ public class GetHuntsRequest extends AsyncTask<URL,Void,ArrayList<HuntInstance>>
             parser.next();
         }
         if(isEndTag(parser,"hunt")){
-            return new HuntInstance(huntName,creator);
+            HuntInstance gotHunt = new HuntInstance(huntName,creator);
+            if(Username.getInstance().getUsername().equalsIgnoreCase(creator)){
+                gotHunt.setMyHunt(true);
+            }
+            return gotHunt;
         } else {
             return null;
         }

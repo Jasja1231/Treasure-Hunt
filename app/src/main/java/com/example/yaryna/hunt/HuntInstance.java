@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class HuntInstance implements Serializable {
     private String  name;
     private String  creator;
+    /**my_hunt specifies if current user is the creator of the hunt*/
     private boolean my_hunt = false;
 
     public HuntInstance(String name, String creator){

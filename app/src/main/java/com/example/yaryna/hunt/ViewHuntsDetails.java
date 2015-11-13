@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -16,7 +17,7 @@ public class ViewHuntsDetails extends Fragment {
     View view;
     /**Hunt we clicked on to view details (In case of guest)*/
     HuntInstance hunt;
-    public String FRAGMENT_BUNDLE_KEY = "com.example.yaryna.hunt.viewhuntdetails.FRAGMENT_BUNDLE_KEY";
+    TextView huntRepresentNameField;
 
     public void  setCurrentHunt(HuntInstance hunt){
         this.hunt = hunt;
@@ -27,6 +28,10 @@ public class ViewHuntsDetails extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_view_hunts_details, container, false);
+
+        huntRepresentNameField = (TextView) view.findViewById(R.id.hunt_represent_name_field);
+        String huntRepresentText = "You are on hunt " + hunt.getName() + " by creator " + hunt.getCreator() + " ,enjoy it!";
+        huntRepresentNameField.setText(huntRepresentText);
         return view;
     }
 }
