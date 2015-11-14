@@ -44,14 +44,12 @@ public class HuntList extends Fragment implements Updatable {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_hunt_list, container, false);
 
-
         /**Get ListView for displaying*/
         ListView huntsList = (ListView) view.findViewById(R.id.hunts_view_list);
         huntsAdapter = new ArrayAdapter<HuntInstance>(getActivity(), android.R.layout.simple_list_item_1, hunts);
         huntsList.setAdapter(huntsAdapter);
 
         //hunts.add(new HuntInstance("Dummy","www.dummy.org"));
-        //
 
         GetHuntsRequest request = new GetHuntsRequest(this);
         request.execute();
@@ -84,5 +82,10 @@ public class HuntList extends Fragment implements Updatable {
         hunts.clear();
         hunts.addAll(result);
         huntsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void newResultsToUpdatePost(Object new_results) {
+        //do nothing
     }
 }

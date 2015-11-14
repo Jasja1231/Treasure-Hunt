@@ -42,12 +42,23 @@ public class SettingsDialog extends DialogFragment {
         saveButton = (Button)view.findViewById(R.id.dialog_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                boolean nameChanged = true;
                 String newUsername = editText.getText().toString();
+                if(Username.getInstance().getUsername().equalsIgnoreCase(newUsername))
+                    nameChanged = false;
                 // Perform action on save button click
                 if(Username.getInstance().IsValidUsername(newUsername)){
                     Username.getInstance().changeUsername(newUsername);
                     editText.setText(newUsername);
                     dismiss();
+
+                if(nameChanged == true){
+                    //just in case return new User to home screen of huntlist
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container,new HuntList())
+                            .commit();
+                    }
                 }
                 else{
                     Toast.makeText(getContext(),"Invalid username",Toast.LENGTH_LONG).show();
