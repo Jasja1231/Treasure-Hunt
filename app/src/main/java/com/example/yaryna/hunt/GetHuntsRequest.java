@@ -53,7 +53,7 @@ public class GetHuntsRequest extends AsyncTask<URL,Void,ArrayList<HuntInstance>>
             System.out.println("XML parser failure");
         }
         catch (IOException  ex){
-            System.out.println("IO failure");
+            System.out.println("IO failure during doInBackground execution");
         }
         return list_of_hunts;
     }

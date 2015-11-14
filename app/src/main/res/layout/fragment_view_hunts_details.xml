@@ -34,7 +34,6 @@
                 android:layout_height="100dp"
                 android:layout_width="150dp"
                 android:id="@+id/play_button"
-                android:background="@color/pinkTheme"
                 android:layout_margin="10dp">
             </Button>
 
@@ -43,9 +42,23 @@
                 android:layout_height="100dp"
                 android:layout_width="150dp"
                 android:id="@+id/edit_button"
-                android:background="@color/pinkTheme"
                 android:layout_margin="10dp">
             </Button>
         </LinearLayout>
+
+        <TextView android:id="@+id/status_location_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pinkTheme"
+            android:textAlignment="center"
+            android:text="Location amount to display information">
+        </TextView>
+
+        <ListView
+            android:id="@+id/list_location_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
     </LinearLayout>
 </FrameLayout>
