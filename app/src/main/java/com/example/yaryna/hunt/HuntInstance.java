@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Yaryna on 01/11/2015.
+ * Created by 15038588
  */
 public class HuntInstance implements Serializable {
     private String  name;

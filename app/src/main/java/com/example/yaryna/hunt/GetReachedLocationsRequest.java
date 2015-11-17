@@ -37,8 +37,7 @@ public class GetReachedLocationsRequest extends AsyncTask {
     /**Background thread for making a request*/
     @Override
     protected Object doInBackground(Object[] params) {
-        request("location",urlReachedLoc);
-        return null;
+        return request("location",urlReachedLoc);
     }
 
 
@@ -62,7 +61,7 @@ public class GetReachedLocationsRequest extends AsyncTask {
             while (!isEndDoc(parser)) {
                 if (isStartTag(parser, tagName)) {
                     String newResult = getItem(parser);
-                    if(!newResult.isEmpty() && newResult!=null)
+                    if(newResult!=null)
                         result.add(getItem(parser));
                 }
                 parser.next();

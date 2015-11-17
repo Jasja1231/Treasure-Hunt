@@ -1,6 +1,7 @@
 package com.example.yaryna.hunt;
 
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 /**
  * This fragment represent list of locations with details of specified HuntInscatnce.
@@ -65,11 +65,13 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
             public void onClick(View v) {
                 if(userIsRegistered == true){
                     Toast.makeText(getContext(),"You are already registered on this hunt,You can resume your game!",Toast.LENGTH_SHORT).show();
+                    play();
                 }
                 else if(userIsRegistered == false){
                     registerUserOnHunt();//register user
+                    play();
                 }
-                play();
+
             }
         });
 
@@ -130,6 +132,34 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
     public void updateReachedLocations(Object o){
             ArrayList<String> newReachedlocations = (ArrayList<String>) o;
             this.reachedLocations  = newReachedlocations;
+
+
+        //Check  that hunt is complete
+        if(this.reachedLocations.size() == hunt.getAllHuntLocations().size()){
+            reachedEndOfHunt = true;
+            Toast.makeText(getContext(),"You have completed this hunt. There are no other available locations available yet...Wait for creator to add some more :)",Toast.LENGTH_LONG).show();
+        }
+
+        if(hunt.getAllHuntLocations().size() > 0){
+            Location returnLocation = hunt.getAllHuntLocations().get(hunt.getAllHuntLocations().size()-1);
+            for(Location l : hunt.getAllHuntLocations())
+                for(String s : reachedLocations)
+                    if(!l.getName().equalsIgnoreCase(s)){
+                        returnLocation = l;
+                        break;
+                    }
+            showQuestionDialog(returnLocation);
+        }
+        else {
+            Toast.makeText(getActivity(),"The creator of this hunt didn't add  locations", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    /**Opens dialog window with current location */
+    private void showQuestionDialog(Location location){
+        GameDialog gameDialog = new GameDialog();
+        gameDialog.show(getActivity().getFragmentManager(), "");
     }
 
     /**Update after User registered on a Hunt*/
