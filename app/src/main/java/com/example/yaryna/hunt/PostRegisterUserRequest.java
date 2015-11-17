@@ -14,13 +14,15 @@ import java.util.Objects;
  */
 public class PostRegisterUserRequest extends AsyncTask {
 
-    Updatable to_update; //fragment to update after registering
+    //Updatable to_update; //fragment to update after registering
+
     HuntInstance hunt;   //hunt on which user will be registered
     String username;     //user to be registered
 
     String BASE_URL = "http://sots.brookes.ac.uk/~p0073862/services/hunt";
     String URLForRegister;
     byte[] dataToPost;
+    ViewHuntsDetails to_update;
 
 
     /**Constructor to get all values for user register
@@ -28,7 +30,7 @@ public class PostRegisterUserRequest extends AsyncTask {
      *                  when post method finish
      * @param huntName  current hunt(HuntInstance object) user will be registered on
      * @param username  user to be registered */
-    public  PostRegisterUserRequest(byte[] b,Updatable to_update,HuntInstance huntName,String username){
+    public  PostRegisterUserRequest(byte[] b,ViewHuntsDetails to_update,HuntInstance huntName,String username){
         this.to_update = to_update;
         this.hunt = huntName;
         this.username = username;
@@ -39,7 +41,7 @@ public class PostRegisterUserRequest extends AsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
-        to_update.newResultsToUpdatePost(o);
+        to_update.UpdateAfterRegister(o);
     }
 
     @Override

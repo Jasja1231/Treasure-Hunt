@@ -9,6 +9,4 @@ public interface Updatable {
     * UI with new values.
     */
    void newResultsToUpdate(Object new_results);
-   /**This if for post method updation*/
-   void newResultsToUpdatePost(Object new_results);
 }

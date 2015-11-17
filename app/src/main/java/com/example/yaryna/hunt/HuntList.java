@@ -37,7 +37,6 @@ public class HuntList extends Fragment implements Updatable {
     public HuntList(){}
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,8 +70,6 @@ public class HuntList extends Fragment implements Updatable {
                 Toast.makeText(getContext(),output , Toast.LENGTH_LONG).show();
             }
         });
-
-
         return view;
     }
 
@@ -84,8 +81,4 @@ public class HuntList extends Fragment implements Updatable {
         huntsAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void newResultsToUpdatePost(Object new_results) {
-        //do nothing
-    }
 }
