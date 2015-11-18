@@ -20,5 +20,4 @@ public class Username {
         if(username.length() > 50) { return false; }    // Username is too long
         return true;
     }
-
 }

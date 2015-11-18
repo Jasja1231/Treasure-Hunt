@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.nio.charset.StandardCharsets;
@@ -27,11 +29,14 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
     TextView huntRepresentNameField;
     Button playAndRegister;
     Button editButton;
+    ListView listLocationsView;
+    ArrayAdapter<Location> listAllLocationsAdapter;
+    ArrayAdapter<String> listReachedStringsAdapter;
 
-    ArrayList<String> reachedLocations; //Locations name reached by user
+    ArrayList<String> reachedLocations  = new ArrayList<>(); //Locations name reached by user
     boolean reachedEndOfHunt = false;   // specify if user reached the end of the current hunt
     boolean userIsRegistered = false;   //Default- user not registered
-    boolean newLocationAdded = false;  // checks if all hunt locations need to be updated
+
 
     public void  setCurrentHunt(HuntInstance hunt){
         this.hunt = hunt;
@@ -46,6 +51,13 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
         huntRepresentNameField = (TextView) view.findViewById(R.id.hunt_represent_name_field);
         String huntRepresentText = "You are on hunt " + hunt.getName() + " by creator " + hunt.getCreator() + " ,enjoy it!";
         huntRepresentNameField.setText(huntRepresentText);
+        listLocationsView = (ListView) view.findViewById(R.id.list_locations);
+
+        //Assign adapters for the listview
+        listAllLocationsAdapter = new ArrayAdapter<Location>(getActivity(),
+                android.R.layout.simple_list_item_1, this.hunt.getAllHuntLocations());
+        listReachedStringsAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, this.reachedLocations);
 
         //check If User Registered
         GetRegisteredUsersOnHuntRequest getRegisteredUsersOnHuntRequest = new GetRegisteredUsersOnHuntRequest(this/*fragment is to_update*/,hunt);
@@ -54,6 +66,34 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
         //Get all of the locations in the hunt if hunt does nothave them saved yet
         //if(this.hunt.getAllHuntLocations() == null || newLocationAdded == true)
         new GetAllHuntLocationsRequest(this,hunt).execute();
+        GetReachedLocationsRequest getReachedLocationsRequest = new GetReachedLocationsRequest(this,this.hunt);
+        getReachedLocationsRequest.execute();
+
+        listAllLocationsAdapter.notifyDataSetChanged();
+        listReachedStringsAdapter.notifyDataSetChanged();
+
+        //handling listView display locations
+
+        if(hunt.isMyHunt() == true){
+            if(this.hunt.getAllHuntLocations().size() > 0){
+                listLocationsView.setAdapter(listAllLocationsAdapter);
+            }
+                else if (this.hunt.getAllHuntLocations().size() > 0){
+                TextView statusLocationSummary = (TextView) view.findViewById(R.id.status_location_summary);
+                statusLocationSummary.setText("You didn't add any locations yet");
+            }
+
+        }
+        else{
+            if(this.reachedLocations.size() > 0){
+                listLocationsView.setAdapter(listReachedStringsAdapter);
+            }
+            else if (this.reachedLocations.size() == 0 ){
+                TextView statusLocationSummary = (TextView) view.findViewById(R.id.status_location_summary);
+                statusLocationSummary.setText("No reached locations");
+            }
+        }
+
 
 
         /**Play and register on hunt button handling*/
@@ -78,7 +118,8 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
         /**Edit button enabled only  for creator of the hunt*/
         editButton = (Button) view.findViewById(R.id.edit_button);
         //Hide button from non-creator
-        if(hunt.isMyHunt()==false) editButton.setVisibility(View.GONE);
+        if(hunt.isMyHunt()==false)
+            editButton.setVisibility(View.GONE);
         return view;
     }
 
@@ -132,6 +173,7 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
     public void updateReachedLocations(Object o){
             ArrayList<String> newReachedlocations = (ArrayList<String>) o;
             this.reachedLocations  = newReachedlocations;
+            listReachedStringsAdapter.notifyDataSetChanged();
 
 
         //Check  that hunt is complete
@@ -142,12 +184,18 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
 
         if(hunt.getAllHuntLocations().size() > 0){
             Location returnLocation = hunt.getAllHuntLocations().get(hunt.getAllHuntLocations().size()-1);
-            for(Location l : hunt.getAllHuntLocations())
-                for(String s : reachedLocations)
-                    if(!l.getName().equalsIgnoreCase(s)){
-                        returnLocation = l;
-                        break;
+            for (Location loc : hunt.getAllHuntLocations()) {
+                boolean found = false;
+                for (String reached : reachedLocations) {
+                    if (loc.getName().equals(reached)) {
+                        found = true;
                     }
+                }
+                if (!found) {
+                    returnLocation = loc;
+                    break;
+                }
+            }
             showQuestionDialog(returnLocation);
         }
         else {
@@ -157,9 +205,25 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
 
 
     /**Opens dialog window with current location */
-    private void showQuestionDialog(Location location){
+    private void showQuestionDialog(Location loc){
         GameDialog gameDialog = new GameDialog();
+        gameDialog.setArguments(makeBundle(loc));
         gameDialog.show(getActivity().getFragmentManager(), "");
+    }
+
+    private Bundle makeBundle(Location loc){
+        Bundle args = new Bundle();
+        args.putString("locationName", loc.getName());
+        args.putString("locationDescription", loc.getDescription());
+        args.putString("locationLatitude", loc.getLatitude());
+        args.putString("locationLongitude", loc.getLongitude());
+        args.putString("locationHunt", hunt.getName());
+        args.putString("locationPosition", loc.getPosition());
+        //args.putBoolean("isLastLocation", huntComplete);
+        args.putString("locationQuestion", loc.getQuestion());
+        args.putString("locationClue", loc.getClue());
+        args.putString("locationAnswer", loc.getAnswer());
+        return args;
     }
 
     /**Update after User registered on a Hunt*/
@@ -173,6 +237,5 @@ public class ViewHuntsDetails extends Fragment implements Updatable{
             userIsRegistered = true;
         }
         updateButtonStatus(playAndRegister);
-        //TODO: add open game dialog function!
     }
 }

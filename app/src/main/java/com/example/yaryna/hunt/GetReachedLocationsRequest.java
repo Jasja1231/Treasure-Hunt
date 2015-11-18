@@ -61,8 +61,10 @@ public class GetReachedLocationsRequest extends AsyncTask {
             while (!isEndDoc(parser)) {
                 if (isStartTag(parser, tagName)) {
                     String newResult = getItem(parser);
-                    if(newResult!=null)
-                        result.add(getItem(parser));
+                    if(newResult==null)
+                        newResult = "Creator named it NULL";
+                    result.add(newResult);
+
                 }
                 parser.next();
             }
@@ -84,7 +86,7 @@ public class GetReachedLocationsRequest extends AsyncTask {
                 System.out.println(s);
             }
         else
-            System.out.println("END OF TEST FOR GOT LOCATIONS: NO LOCATIONS FOUND");
+            System.out.println(" NO REACHED LOCATIONS FOUND");
 
         return result;
     }
@@ -95,7 +97,6 @@ public class GetReachedLocationsRequest extends AsyncTask {
         String locationName = "";
         while (!isEndTag(parser, "location") && !isEndDoc(parser)) {
             if (isStartTag(parser, "name")) {
-                System.out.print("TEST : locationName from getItem:: " +locationName);
                 locationName = getTagText(parser, "name");
             }
             parser.next();
@@ -105,7 +106,6 @@ public class GetReachedLocationsRequest extends AsyncTask {
         } else {
             return null;
         }
-
     }
 
     protected boolean isEndDoc(XmlPullParser parser)

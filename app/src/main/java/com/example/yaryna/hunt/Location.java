@@ -1,67 +1,66 @@
 package com.example.yaryna.hunt;
 
-import java.util.Date;
 
 /**
  * Created 15038588
  */
 public class Location {
-    private String name;
-    private String description;
-    private String position;
-    private String clue;
-    private String time;
-    private String question;
-    private String answer;
-    private String latitude;
-    private String longitude;
-    private String date;
+    private String name = "Default name";
+    private String description = "Default description";
+    private String position= "Default position";
+    private String clue= "Default clue";
+    private String time= "Default time";
+    private String question= "Default question";
+    private String answer= "Default answer";
+    private String latitude= "Default latitude";
+    private String longitude= "Default longitude";
+    private String date= "Default date";
 
-    public void setAnswer(String answer) {
-        if(answer==null)
-            answer = "NULL";
-        this.answer = answer;
+    public void setAnswer(String l) {
+        if(l==null)
+            l = "NULL";
+        this.answer = l;
     }
-    public void setClue(String clue) {
-        if(clue==null)
-            clue = "NULL";
-        this.clue = clue;
+    public void setClue(String l) {
+        if(l==null)
+            l = "NULL";
+        this.clue = l;
     }
-    public void setDate(String date){
-        if(date == null)
-            date = "NULL";
-        this.date = date;
+    public void setDate(String l){
+        if(l == null)
+            l = "NULL";
+        this.date = l;
     }
 
-    public void setDescription(String description){
-        if(description == null)
-            description = "creator named it NULL";
-        this.description = description;}
+    public void setDescription(String l){
+        if(l == null)
+            l = "creator named it NULL";
+        this.description = l;}
 
-    public void setLatitude(String latitude){
-        if(latitude == null)
-            latitude = "creator named it NULL";
-        this.latitude = latitude;}
+    public void setLatitude(String l){
+        if(l == null)
+            l = "creator named it NULL";
+        this.latitude = l;}
 
-    public void setLongitude(String longitude){
-        if(longitude == null)
-            longitude = "creator named it NULL";
-        this.longitude = longitude;}
+    public void setLongitude(String l){
+        if(l == null)
+            l = "creator named it NULL";
+        this.longitude = l;}
 
-    public void setName(String name){
-        if(name == null)
-            name = "creator named it NULL";
-        this.name = name;}
+    public void setName(String n){
+        if(n == null)
+            n = "creator named it NULL";
+        this.name = n;}
 
-    public void setQuestion(String question) {
-        if(question == null)
-            question = "creator named it NULL";
-        this.question = question;}
+    public void setQuestion(String q) {
+        if(q == null)
+            q = "creator named it NULL";
+        this.question = q;}
 
-    public void setTime(String time) {
-        if(time == null)
-            time = "creator named it NULL";
-        this.time = time;}
+    public void setTime(String t) {
+        if(t == null)
+            t = "creator named it NULL";
+        this.time = t;}
 
 
     public String getAnswer(){return answer;}
@@ -78,10 +77,10 @@ public class Location {
         return position;
     }
 
-    public void setPosition(String position) {
-        if(position == null)
-            position = "creator named it NULL";
-        this.position = position;
+    public void setPosition(String l) {
+        if(l == null)
+            l = "creator named it NULL";
+        this.position = l;
     }
 
     public String toString(){

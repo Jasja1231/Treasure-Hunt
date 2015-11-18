@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by 15038588
@@ -44,7 +45,6 @@ public class GetAllHuntLocationsRequest extends AsyncTask{
     protected Object request(String tagName, String urlReached) {
         ArrayList<Location> result = new ArrayList<>();
         try {
-
             URL url = new URL(urlReached);
 
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -62,21 +62,6 @@ public class GetAllHuntLocationsRequest extends AsyncTask{
         } catch (IOException e) {
             System.out.println(" CUSTOM ERROR MESSAGE :: IOException while getting all hunt locations\"");
         }
-
-        //TODO: Delete test system out println after method is tested
-        /**TESTING IF LOCATIONS WERE GOT***/
-        //Returns array of strings with location names
-        System.out.println("TEST FOR GOT ALL  LOCATIONS:");
-        if (result.isEmpty() == false){
-            for (Location o : result) {
-                String s = o.getName();
-                if(s == null)
-                    s = "Creator set the name to null....SAD :(";
-                System.out.println(s);
-            }
-            System.out.println("END OF TEST FOR ALL LOCATIONS");
-        }
-
         return result;
     }
 
