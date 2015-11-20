@@ -11,7 +11,7 @@ public class HuntInstance implements Serializable {
     private String  creator;
     /**my_hunt specifies if current user is the creator of the hunt*/
     private boolean my_hunt = false;
-    private ArrayList<Location> allHuntLocations = new ArrayList<>();
+    private ArrayList<Location> allHuntLocations = null;
 
     public HuntInstance(String name, String creator){
         this.name    = name;
@@ -23,11 +23,10 @@ public class HuntInstance implements Serializable {
     public boolean isMyHunt(){return my_hunt;}
     public String  getName(){return name;}
 
-    public void setAllHuntLocations(ArrayList<Location> locations)
-           {this.allHuntLocations = locations;}
+    public void setAllHuntLocations(ArrayList<Location> locations){this.allHuntLocations = locations;}
     public ArrayList<Location> getAllHuntLocations(){return this.allHuntLocations;}
     public String toString(){
-        String result ="";
+        String result =" ";
         if(Username.getInstance().getUsername().equalsIgnoreCase(creator))
             result = "Hunt: "+ this.name + " " +"  ---> MY HUNT!";
         else

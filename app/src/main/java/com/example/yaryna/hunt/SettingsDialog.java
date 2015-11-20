@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by 15038588
+ * Created by Yaryna on 05/11/2015.
  */
 public class SettingsDialog extends DialogFragment {
 

@@ -54,10 +54,9 @@
         </TextView>
 
         <ListView
-            android:id="@+id/list_locations"
+            android:id="@+id/list_location_summary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/darkPinkTheme">
+            android:layout_height="wrap_content">
         </ListView>
 
     </LinearLayout>
